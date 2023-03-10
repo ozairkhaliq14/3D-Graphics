@@ -1,0 +1,120 @@
+<!-- Name: Ozair Khaliq-->
+<!-- NETid: okhali3-->
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<style>
+		html {background-color: beige;}
+		h1 {text-align:center;}
+		h2 {text-align:center;}
+		p {
+			font-size: 20px;
+		}
+		canvas {
+			display: block;
+			margin: 0 auto;
+			position: absolute;
+			top: 25%;
+			bottom: 0;
+			left: 0;
+			right: 0;
+		}
+	</style>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>cone Exercise Using a Class</title>
+
+<!-- First to load up the external javascript files.  MultiObjectFunctions and cube.js does the work -->
+
+<script type="text/javascript" src="../angelCommon/webgl-utils.js"></script>
+<script type="text/javascript" src="../angelCommon/initShaders.js"></script>
+<script type="text/javascript" src="../angelCommon/MV.js"></script>
+<script type="text/javascript" src="coneClassExercise.js"></script>	<!--   Change this line -->
+<script type="text/javascript" src="coneFunctions.js"></script>	<!--   Change this line -->
+<script type="text/javascript" src="coneClass.js"></script>
+
+<!-- First the vertex shader ------------------------------------------------------------------>
+
+<script id="vertex-shader" type="x-shader/x-vertex" >
+
+	// Attributes are values that vary from vertex to vertex 
+	attribute vec3 vPosition;	// Vertex position data in 3D space
+	attribute vec3 vColor;		// Vertex color data - Not needed for all applications
+	
+	// Uniform variables are shared for all vertices 
+	uniform mat4 vModelView;	// Camera Model View Matrix
+	uniform mat4 vProjection;	// Camera Projection Matrix
+	uniform mat4 vTransformation;	// Model transformation matrix
+	
+	// Varying values are passed from vertex shader to fragment shader, as interpolated values 
+	varying vec4 color;			// Interpolated color 
+	attribute vec2 vCoords;
+	varying vec2 fCoords;
+
+	void main( ) {
+		precision mediump float;
+		
+		// Pass-throughs to fragment shader
+		color = vec4( vColor, 1 );
+		fCoords = vCoords;
+		
+		gl_Position = vProjection * vModelView * vTransformation * vec4( vPosition, 1.0 );
+
+		return;		
+		
+	} // end of main( ) of vertex shader
+
+</script>	<!--	End of vertex shader -->
+
+<!--  Next the fragment shader --------------------------------------------------------------------->
+
+<script id="fragment-shader" type="x-shader/x-fragment">
+	precision mediump float;
+	
+	// Varying variables are interpolated between vertices of a triangle
+	varying vec4 color;			// Fragment color - Not needed in all applications
+	varying vec2 fCoords;
+	// Uniform variables are shared for all fragments 
+	uniform sampler2D uTextureMap;
+	// None needed for a simple shader.
+
+	void main( ) {
+		
+		// The simplest fragment shader picks a solid color
+		// gl_FragColor = vec4( 1.0, 0.0, 0.0, 1.0 ); // Red
+		
+		// Next simplest uses the color passed through from the vertex shader ( or from a uniform variable. )
+		if (color == vec4(1,1,1,1)) {
+			gl_FragColor = texture2D( uTextureMap, fCoords );
+		} else {
+			gl_FragColor = color;
+		}
+		return;
+	
+	} // End of main( ) for fragment shader
+	
+</script>	<!-- End of fragment shader -->
+
+</head>
+
+<!-- End of all the scripts.  Now here is the actual web page -->
+
+<body>
+    <h1>Ozair Khaliq (okhali3)</h1>
+    <h2>CS 425 Homework Assignment 2: An Amusement Park in Three Dimensions</h2>
+    <p>This is a HTML and javascript webpage that uses WebGL to generate 6 cones at given vertices that spin around the center of the base of the main object to mimic a Merry-Go-Round</p> 
+    <p>Speacial Features: The Merry-Go-Round and Cones are programmed to have random colors every time you refresh the page</p>
+	<p> There is user interaction implemented in this WebPage, you can use the following keys: W A S D I O, all other keys will bring up a help menu </p>
+	<p>Use W: To Get a Top View</p>
+	<p>Use A: To Move Camera Left</p>
+	<p>Use S: To Get a Bottom View</p>
+	<p>Use D: To Move Camera Right</p>
+	<p>Use I: To Zoom in to the Merry-Go-Round</p>
+	<p>Use O: To Zoom out of the Merry-Go-Round</p>
+<canvas id="gl-canvas" width="1150" height="700">
+</canvas>
+</body>
+</html>
+
+

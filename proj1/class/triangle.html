@@ -1,0 +1,58 @@
+<!-- Name: Ozair Khaliq-->
+<!-- NETid: okhali3-->
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    html {background-color: beige;}
+    h1 {text-align:center;}
+    h2 {text-align:center;}
+    p {
+        font-size: 20px;
+    }
+    canvas {
+        display: block;
+        margin: 0 auto;
+        position: absolute;
+        top: 25%;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+</style>
+      
+<script id="vertex-shader" type="x-shader/x-vertex">
+attribute vec4 vPosition;
+
+void
+main()
+{
+    gl_Position = vPosition;
+}
+</script>
+
+<script id="fragment-shader" type="x-shader/x-fragment">
+precision mediump float;
+
+void
+main()
+{
+    gl_FragColor = vec4 (0.63, 0.13, 0.94, 1.0);
+}
+</script>
+
+<script type="text/javascript" src="../angelCommon/webgl-utils.js"></script>
+<script type="text/javascript" src="../angelCommon/initShaders.js"></script>
+<script type="text/javascript" src="triangle.js"></script>
+</head>
+
+<body>
+    <h1>Ozair Khaliq (okhali3)</h1>
+    <h2>CS 425 Homework Assignment 1: Drawing a Kaleidoscope</h2>
+    <p>This is a HTML and javascript webpage that uses WebGL to generate an array of random triangles using the three random vertices given.</p> 
+    <p> Then the triangles are fipped and duplicated around an imaginary circle to immitate a kaleidoscopic image. </p>
+<canvas id="gl-canvas" width="512" height="512">
+</canvas>
+</body>
+</html>
